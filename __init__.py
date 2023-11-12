@@ -19,8 +19,8 @@ class NGP_OT_AnimateOperator(bpy.types.Operator):
     def execute(self, context):
         center_empty = create_empty(self, 'BNGP_EMPTY', (0, 0, 0))
         create_camera(self)
-        create_aabb(self, center_empty)
-        animate_camera(self, context.scene.ngp_props.camera_radius, context.scene.ngp_props.num_frames)
+        create_aabb(self, context, center_empty)  # Pass 'context' parameter
+        animate_camera(self, context.scene.ngp_props.camera_radius, context.scene.ngp_props.num_frames, context.scene.ngp_props.aabb_scale)
         return {'FINISHED'}
 
 class NGP_PT_Panel(bpy.types.Panel):
@@ -34,10 +34,11 @@ class NGP_PT_Panel(bpy.types.Panel):
         layout = self.layout
         layout.prop(context.scene.ngp_props, "camera_radius")
         layout.prop(context.scene.ngp_props, "num_frames")
+        layout.prop(context.scene.ngp_props, "aabb_scale")  # Agregar el nuevo campo para la escala del AABB
         layout.operator("ngp.animate_operator")
 
 class NGP_Properties(bpy.types.PropertyGroup):
-    camera_radius: bpy.props.FloatProperty(name="Camera Radius", default=4.0)
+    camera_radius: bpy.props.FloatProperty(name="Camera Radius", default=4.00)
     num_frames: bpy.props.EnumProperty(
         name="Number of Frames",
         description="Select the number of frames for the animation",
@@ -50,6 +51,7 @@ class NGP_Properties(bpy.types.PropertyGroup):
         ],
         default="100"
     )
+    aabb_scale: bpy.props.FloatProperty(name="AABB Scale", default=4.0)  # Nueva propiedad para la escala del AABB
 
 
 def create_empty(self, name, location):
@@ -70,7 +72,7 @@ def create_camera(self):
         bpy.context.object.constraints["Track To"].up_axis = 'UP_Y'
         bpy.context.object.constraints["Track To"].track_axis = 'TRACK_NEGATIVE_Z'
 
-def create_aabb(self, center_empty):
+def create_aabb(self, context, center_empty):
     if 'AABB' not in bpy.context.scene.objects:
         aabb_location = center_empty.location  # Use the location of the center empty as the AABB location
 
@@ -82,13 +84,13 @@ def create_aabb(self, center_empty):
         # Set the display type to WIRE
         aabb_cube.display_type = 'WIRE'
 
-        # Set the scale of the cube
-        aabb_cube.scale = (4.0, 4.0, 4.0)
+        # Set the scale of the cube using the new property
+        aabb_cube.scale = (context.scene.ngp_props.aabb_scale, context.scene.ngp_props.aabb_scale, context.scene.ngp_props.aabb_scale)
 
         return aabb_cube  # Return the created AABB cube
 
 
-def animate_camera(self, radius, num_frames):
+def animate_camera(self, radius, num_frames, aabb_scale):
     num_frames = int(num_frames)  # Añade esta línea para convertir num_frames a un entero
     scene = bpy.context.scene
     camera = bpy.context.scene.objects['BNGP_CAMERA']
@@ -137,12 +139,13 @@ def animate_camera(self, radius, num_frames):
         aabb_empty.location.y = empty.location.y 
         aabb_empty.location.z = empty.location.z 
 
+        # Actualizar la escala del AABB utilizando la nueva propiedad
+        aabb_empty.scale = (aabb_scale, aabb_scale, aabb_scale)
+
         camera.keyframe_insert(data_path="location", frame=frame)
         camera.keyframe_insert(data_path="rotation_euler", frame=frame)
 
         scene.frame_end = frame
-
-
 
 def register():
     bpy.utils.register_class(NGP_OT_AnimateOperator)
