@@ -19,7 +19,7 @@ class NGP_OT_AnimateOperator(bpy.types.Operator):
     def execute(self, context):
         create_empty(self)
         create_camera(self)
-        animate_camera(self, context.scene.ngp_props.camera_radius, 100)
+        animate_camera(self, context.scene.ngp_props.camera_radius, context.scene.ngp_props.num_frames)
         return {'FINISHED'}
 
 class NGP_PT_Panel(bpy.types.Panel):
@@ -32,10 +32,24 @@ class NGP_PT_Panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         layout.prop(context.scene.ngp_props, "camera_radius")
+        layout.prop(context.scene.ngp_props, "num_frames")
         layout.operator("ngp.animate_operator")
 
 class NGP_Properties(bpy.types.PropertyGroup):
     camera_radius: bpy.props.FloatProperty(name="Camera Radius", default=10.0)
+    num_frames: bpy.props.EnumProperty(
+        name="Number of Frames",
+        description="Select the number of frames for the animation",
+        items=[
+            ("50", "50", "50 frames"),
+            ("75", "75", "75 frames"),
+            ("100", "100", "100 frames"),
+            ("125", "125", "125 frames"),
+            ("150", "150", "150 frames")
+        ],
+        default="100"
+    )
+
 
 def create_empty(self):
     if 'BNGP_EMPTY' not in bpy.context.scene.objects:
@@ -52,9 +66,12 @@ def create_camera(self):
         bpy.context.object.constraints["Track To"].track_axis = 'TRACK_NEGATIVE_Z'
 
 def animate_camera(self, radius, num_frames):
+    num_frames = int(num_frames)  # Añade esta línea para convertir num_frames a un entero
     scene = bpy.context.scene
     camera = bpy.context.scene.objects['BNGP_CAMERA']
     empty = bpy.context.scene.objects['BNGP_EMPTY']
+
+    camera.animation_data_clear()
 
     for frame in range(num_frames):
         angle = (frame / (num_frames // 6)) * 2 * math.pi
@@ -95,10 +112,6 @@ def animate_camera(self, radius, num_frames):
         camera.keyframe_insert(data_path="rotation_euler", frame=frame)
 
         scene.frame_end = frame
-
-
-
-
 
 
 def register():
