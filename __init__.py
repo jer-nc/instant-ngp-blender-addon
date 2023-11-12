@@ -61,34 +61,41 @@ def animate_camera(self, radius, num_frames):
 
         # Rotación alrededor de los ejes X, Y y Z
         if frame < num_frames // 6:
-            camera.location.x = radius * math.cos(angle)
-            camera.location.y = 0
-            camera.location.z = radius * math.sin(angle)
+            x = math.cos(angle)
+            y = 0
+            z = math.sin(angle)
         elif frame < 2*num_frames // 6:
-            camera.location.x = 0
-            camera.location.y = radius * math.cos(angle - math.pi/3)
-            camera.location.z = radius * math.sin(angle - math.pi/3)
+            x = 0
+            y = math.cos(angle - math.pi/3)
+            z = math.sin(angle - math.pi/3)
         elif frame < 3*num_frames // 6:
-            camera.location.x = radius * math.cos(angle - 2*math.pi/3)
-            camera.location.y = radius * math.sin(angle - 2*math.pi/3)
-            camera.location.z = 0
+            x = math.cos(angle - 2*math.pi/3)
+            y = math.sin(angle - 2*math.pi/3)
+            z = 0
         elif frame < 4*num_frames // 6:
-            camera.location.x = radius * math.cos(angle - math.pi)
-            camera.location.y = radius * math.sin(angle - math.pi)
-            camera.location.z = radius * math.sin(angle - math.pi)
+            x = math.cos(angle - math.pi)
+            y = math.sin(angle - math.pi)
+            z = math.sin(angle - math.pi)
         elif frame < 5*num_frames // 6:
-            camera.location.x = radius * math.sin(angle - 4*math.pi/3)
-            camera.location.y = radius * math.cos(angle - 4*math.pi/3)
-            camera.location.z = radius * math.sin(angle - 4*math.pi/3)
+            x = math.sin(angle - 4*math.pi/3)
+            y = math.cos(angle - 4*math.pi/3)
+            z = math.sin(angle - 4*math.pi/3)
         else:
-            camera.location.x = radius * math.sin(angle - 5*math.pi/3)
-            camera.location.y = radius * math.sin(angle - 5*math.pi/3)
-            camera.location.z = radius * math.cos(angle - 5*math.pi/3)
+            x = math.sin(angle - 5*math.pi/3)
+            y = math.sin(angle - 5*math.pi/3)
+            z = math.cos(angle - 5*math.pi/3)
+
+        # Normalizar la posición de la cámara y multiplicar por el radio
+        norm = math.sqrt(x**2 + y**2 + z**2)
+        camera.location.x = radius * x / norm
+        camera.location.y = radius * y / norm
+        camera.location.z = radius * z / norm
 
         camera.keyframe_insert(data_path="location", frame=frame)
         camera.keyframe_insert(data_path="rotation_euler", frame=frame)
 
         scene.frame_end = frame
+
 
 
 
