@@ -18,5 +18,18 @@ class NGP_PT_Panel(bpy.types.Panel):
         layout.label(text="AABB Scale")
         layout.prop(context.scene.ngp_props, "aabb_scale")
         layout.separator()
+
+        # New: Input for export name
+        layout.label(text="Dataset Name")
+        layout.prop(context.scene.ngp_props, "export_name")
+
+        # New: Input for output folder
+        layout.label(text="Output Folder")
+        layout.prop(context.scene.ngp_props, "output_folder")
+
+        layout.separator()
         # Update animation button
         layout.operator("ngp.animate_operator")
+
+        # New: Render button
+        layout.operator("ngp.render_operator")

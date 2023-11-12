@@ -25,6 +25,7 @@ def create_aabb(self, context, center_empty):
         aabb_cube = bpy.context.active_object
         aabb_cube.name = 'BNGP_AABB'
         aabb_cube.display_type = 'WIRE'
+        aabb_cube.hide_render = True
         aabb_cube.scale = (context.scene.ngp_props.aabb_scale, context.scene.ngp_props.aabb_scale, context.scene.ngp_props.aabb_scale)
         return aabb_cube
 
@@ -84,3 +85,5 @@ def animate_camera(self, radius, num_frames, aabb_scale):
         camera.keyframe_insert(data_path="rotation_euler", frame=frame)
 
         scene.frame_end = frame
+
+

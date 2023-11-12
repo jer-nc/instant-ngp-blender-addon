@@ -19,3 +19,13 @@ class NGP_Properties(bpy.types.PropertyGroup):
         description="Select the scale of the AABB",
         default=4.0
         )
+     # New: Export name property
+    export_name: bpy.props.StringProperty(name="", default="dataset")
+
+    # New: Output folder property
+    output_folder: bpy.props.StringProperty(
+        name="",
+        default="",
+        subtype='DIR_PATH'
+    )
+
