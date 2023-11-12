@@ -17,8 +17,9 @@ class NGP_OT_AnimateOperator(bpy.types.Operator):
     bl_label = "Animate Camera"
 
     def execute(self, context):
-        create_empty(self)
+        center_empty = create_empty(self, 'BNGP_EMPTY', (0, 0, 0))
         create_camera(self)
+        create_aabb(self, center_empty)
         animate_camera(self, context.scene.ngp_props.camera_radius, context.scene.ngp_props.num_frames)
         return {'FINISHED'}
 
@@ -36,7 +37,7 @@ class NGP_PT_Panel(bpy.types.Panel):
         layout.operator("ngp.animate_operator")
 
 class NGP_Properties(bpy.types.PropertyGroup):
-    camera_radius: bpy.props.FloatProperty(name="Camera Radius", default=10.0)
+    camera_radius: bpy.props.FloatProperty(name="Camera Radius", default=4.0)
     num_frames: bpy.props.EnumProperty(
         name="Number of Frames",
         description="Select the number of frames for the animation",
@@ -51,10 +52,14 @@ class NGP_Properties(bpy.types.PropertyGroup):
     )
 
 
-def create_empty(self):
-    if 'BNGP_EMPTY' not in bpy.context.scene.objects:
-        bpy.ops.object.empty_add(location=(0, 0, 0))
-        bpy.context.active_object.name = 'BNGP_EMPTY'
+def create_empty(self, name, location):
+    if name not in bpy.context.scene.objects:
+        bpy.ops.object.empty_add(location=location)
+        bpy.context.active_object.name = name
+        return bpy.context.active_object  # Return the created empty object
+    else:
+        return bpy.context.scene.objects[name]  # Return existing empty object if it already exists
+
 
 def create_camera(self):
     if 'BNGP_CAMERA' not in bpy.context.scene.objects:
@@ -65,11 +70,31 @@ def create_camera(self):
         bpy.context.object.constraints["Track To"].up_axis = 'UP_Y'
         bpy.context.object.constraints["Track To"].track_axis = 'TRACK_NEGATIVE_Z'
 
+def create_aabb(self, center_empty):
+    if 'AABB' not in bpy.context.scene.objects:
+        aabb_location = center_empty.location  # Use the location of the center empty as the AABB location
+
+        # Create a cube mesh
+        bpy.ops.mesh.primitive_cube_add(size=1.0, location=aabb_location)
+        aabb_cube = bpy.context.active_object
+        aabb_cube.name = 'AABB'
+
+        # Set the display type to WIRE
+        aabb_cube.display_type = 'WIRE'
+
+        # Set the scale of the cube
+        aabb_cube.scale = (4.0, 4.0, 4.0)
+
+        return aabb_cube  # Return the created AABB cube
+
+
 def animate_camera(self, radius, num_frames):
     num_frames = int(num_frames)  # Añade esta línea para convertir num_frames a un entero
     scene = bpy.context.scene
     camera = bpy.context.scene.objects['BNGP_CAMERA']
     empty = bpy.context.scene.objects['BNGP_EMPTY']
+    aabb_empty = bpy.context.scene.objects.get('AABB')
+
 
     camera.animation_data_clear()
 
@@ -107,6 +132,10 @@ def animate_camera(self, radius, num_frames):
         camera.location.x = empty.location.x + radius * x / norm
         camera.location.y = empty.location.y + radius * y / norm
         camera.location.z = empty.location.z + radius * z / norm
+
+        aabb_empty.location.x = empty.location.x 
+        aabb_empty.location.y = empty.location.y 
+        aabb_empty.location.z = empty.location.z 
 
         camera.keyframe_insert(data_path="location", frame=frame)
         camera.keyframe_insert(data_path="rotation_euler", frame=frame)
