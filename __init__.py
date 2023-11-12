@@ -104,14 +104,15 @@ def animate_camera(self, radius, num_frames):
 
         # Normalizar la posición de la cámara y multiplicar por el radio
         norm = math.sqrt(x**2 + y**2 + z**2)
-        camera.location.x = radius * x / norm
-        camera.location.y = radius * y / norm
-        camera.location.z = radius * z / norm
+        camera.location.x = empty.location.x + radius * x / norm
+        camera.location.y = empty.location.y + radius * y / norm
+        camera.location.z = empty.location.z + radius * z / norm
 
         camera.keyframe_insert(data_path="location", frame=frame)
         camera.keyframe_insert(data_path="rotation_euler", frame=frame)
 
         scene.frame_end = frame
+
 
 
 def register():
