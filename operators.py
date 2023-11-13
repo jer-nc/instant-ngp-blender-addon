@@ -19,6 +19,13 @@ class NGP_OT_RenderOperator(bpy.types.Operator):
     bl_idname = "ngp.render_operator"
     bl_label = "Render Animation"
 
+    # function from original nerf 360_view.py code for blender
+    def listify_matrix(self, matrix):
+        matrix_list = []
+        for row in matrix:
+            matrix_list.append(list(row))
+        return matrix_list
+    
     def execute(self, context):
         # Accessing NGP_Properties instance here
         ngp_properties = context.scene.ngp_props
@@ -53,9 +60,6 @@ class NGP_OT_RenderOperator(bpy.types.Operator):
 
                 # Render the frame
                 bpy.ops.render.render(write_still=True)
-
-            # fl_x = bpy.context.scene.render.resolution_x * 0.5 / tan(degrees(camera_object.data.angle_x) * 0.5)
-            # fl_y = bpy.context.scene.render.resolution_y * 0.5 / tan(degrees(camera_object.data.angle_y) * 0.5)
 
             camera_angle_x = camera_object.data.angle_x
             camera_angle_y = camera_object.data.angle_y
@@ -122,15 +126,13 @@ class NGP_OT_RenderOperator(bpy.types.Operator):
 
             for frame in range(1, bpy.context.scene.frame_end + 1):
                 bpy.context.scene.frame_set(frame)
-                transform_matrix = camera_object.matrix_world.copy()
-                
-                # Convertir la matriz a una lista de listas
-                transform_list = [[item for item in row] for row in transform_matrix]
                 
                 camera_data["frames"].append({
                     "file_path": f"train\\{frame:04d}.png",
-                    "transform_matrix": transform_list
+                    "transform_matrix": self.listify_matrix( camera_object.matrix_world )
                 })
+
+
             # Save the transforms_train.json file
             json_path = os.path.join(output_json_train, 'transforms_train.json')
             with open(json_path, 'w') as json_file:
