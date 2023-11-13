@@ -14,10 +14,10 @@ class NGP_Properties(bpy.types.PropertyGroup):
         ],
         default="100"
     )
-    aabb_scale: bpy.props.FloatProperty(
+    aabb_scale: bpy.props.IntProperty(
         name="AABB",
-        description="Select the scale of the AABB",
-        default=4.0
+        description="Set the scale of the AABB",
+        default=4,
         )
      # New: Export name property
     export_name: bpy.props.StringProperty(name="", default="dataset")
