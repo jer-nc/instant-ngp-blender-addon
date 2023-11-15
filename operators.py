@@ -32,6 +32,11 @@ class NGP_OT_RenderOperator(bpy.types.Operator):
         output_folder = f"{ngp_properties.output_folder}{ngp_properties.export_name}/train"
         output_json_train = f"{ngp_properties.output_folder}{ngp_properties.export_name}"
 
+        # Check if output_folder is empty
+        if not ngp_properties.output_folder:
+            self.report({'ERROR'}, "Please specify an output folder.")
+            return {'CANCELLED'}
+        
         try:
             # Ensure the output folder exists, create it if not
             os.makedirs(output_folder, exist_ok=True)

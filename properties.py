@@ -10,7 +10,11 @@ class NGP_Properties(bpy.types.PropertyGroup):
             ("75", "75", "75 frames"),
             ("100", "100", "100 frames"),
             ("125", "125", "125 frames"),
-            ("150", "150", "150 frames")
+            ("150", "150", "150 frames"),
+            ("200", "200", "200 frames"),
+            ("300", "300", "300 frames"),
+            ("400", "400", "400 frames"),
+            ("500", "500", "500 frames"),
         ],
         default="100"
     )
