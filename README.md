@@ -27,7 +27,7 @@ So far, we have successfully generated these datasets with AWS Batch and we are 
 
 The addon is designed to work both locally and on the cloud system we are currently working on.
 
-If you are interested in the AWS Batch implementation, you can check out [this](https://github.com/jer-nc/blender-aws-batch-instant-ngp-dataset) repository (WIP - STATIC VERSION) of the Docker image with Blender and the logic to render synthetic datasets for instant-ngp.
+If you are interested in the AWS Batch implementation, you can check out [this repository](https://github.com/jer-nc/blender-aws-batch-instant-ngp-dataset) (WIP - STATIC VERSION) of the Docker image with Blender and the logic to render synthetic datasets for instant-ngp.
 
 ## Features
 - **Camera Animation**: Easily create camera animations around a specified object.
