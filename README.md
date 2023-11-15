@@ -56,8 +56,9 @@ If you are interested in the AWS Batch implementation, you can check out [this](
 
 ## Authors
 
-- [jer-nc]()
-- [david-blg]()
+- [jer-nc](https://github.com/jer-nc)
+- [david-blg](https://github.com/david-blg)
+
 
 ## References
 1. BlenderNerf Repo - [BlenderNerf Github](https://github.com/maximeraafat/BlenderNeRF)
