@@ -1,5 +1,11 @@
 # Synthetic NGP Dataset Blender Addon
 
+![i-ngp](./assets/instant-ngp.png)
+
+| Blender Addon                         | Dataset                               |
+| ------------------------------------- | ------------------------------------- |
+| ![addon-ngp](./assets/addon-bngp.png) | ![dataset](./assets/dataset-imgs.jpg) |
+
 ## Overview
 The Synthetic NGP Dataset Blender Addon simplifies the process of creating synthetic datasets for training with Nvidia's Instant-NGP (NeRF) by automating the generation of camera animations around an object. This addon captures frames from various angles and saves the corresponding camera data for later use in training.
 
@@ -12,7 +18,7 @@ We created this addon to understand how the Instant-NGP and NeRF concepts work i
 
 While not experts in the field, we are currently conducting cloud rendering tests with AWS Batch and Blender. We thought we could generate a simplified addon to quickly create datasets with AWS Batch, allowing us to render each frame in parallel and create the `transforms_train.json` file in minutes.
 
-So far, we have successfully generated these datasets with AWS Batch and are building a solution to work dynamically and process .blend scenes from S3, automating the process (as the .blend file is currently statically in the Docker image).
+So far, we have successfully generated these datasets with AWS Batch and we are building a solution to work dynamically and process .blend scenes from S3, automating the process (as the .blend file is currently statically in the Docker image).
 
 The addon is designed to work both locally and on the cloud system we are currently working on.
 
