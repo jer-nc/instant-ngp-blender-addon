@@ -1,4 +1,4 @@
-# Synthetic NGP Dataset Blender Addon
+# Synthetic INSTANT-NGP Dataset Blender Addon
 
 ![i-ngp](./assets/instant-ngp.png)
 
@@ -6,7 +6,7 @@ _Instant-ngp_ - [GitHub - NVlabs/instant-ngp: Instant neural graphics primitives
 
 
 ## Overview
-The Synthetic NGP Dataset Blender Addon simplifies the process of creating synthetic datasets for training with Nvidia's Instant-NGP (NeRF) by automating the generation of camera animations around an object. This addon captures frames from various angles and saves the corresponding camera data for later use in training.
+The Synthetic INSTANT-NGP Dataset Blender Addon simplifies the process of creating synthetic datasets for training with Nvidia's Instant-NGP (NeRF) by automating the generation of camera animations around an object. This addon captures frames from various angles and saves the corresponding camera data for later use in training.
 
 This addon is a streamlined adaptation of the BlenderNerf addon created by Maxime Raafat. If you are looking for a much more customized and flexible version, we recommend using his [BlenderNerf addon](https://github.com/maximeraafat/BlenderNeRF).
 
