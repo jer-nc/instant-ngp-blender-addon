@@ -30,7 +30,7 @@ def create_aabb(self, context, center_empty):
         return aabb_cube
 
 def animate_camera(self, radius, num_frames, aabb_scale):
-    num_frames = int(num_frames)  # Añade esta línea para convertir num_frames a un entero
+    num_frames = int(num_frames)
     scene = bpy.context.scene
     camera = bpy.context.scene.objects['BNGP_CAMERA']
     empty = bpy.context.scene.objects['BNGP_EMPTY']
@@ -42,7 +42,6 @@ def animate_camera(self, radius, num_frames, aabb_scale):
     for frame in range(num_frames):
         angle = (frame / (num_frames // 6)) * 2 * math.pi
 
-        # Rotación alrededor de los ejes X, Y y Z
         if frame < num_frames // 6:
             x = math.cos(angle)
             y = 0
