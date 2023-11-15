@@ -2,16 +2,21 @@
 
 ![i-ngp](./assets/instant-ngp.png)
 
-| Blender Addon                         | Dataset                               |
-| ------------------------------------- | ------------------------------------- |
-| ![addon-ngp](./assets/addon-bngp.png) | ![dataset](./assets/dataset-imgs.jpg) |
+_Instant-ngp_ - [GitHub - NVlabs/instant-ngp: Instant neural graphics primitives](https://github.com/NVlabs/instant-ngp)
+
 
 ## Overview
 The Synthetic NGP Dataset Blender Addon simplifies the process of creating synthetic datasets for training with Nvidia's Instant-NGP (NeRF) by automating the generation of camera animations around an object. This addon captures frames from various angles and saves the corresponding camera data for later use in training.
 
-This addon is a streamlined adaptation of the BlenderNerf addon created by Maxime Raafat. If you are looking for a much more customized and flexible version, we recommend using his [BlenderNerf Github addon](https://github.com/maximeraafat/BlenderNeRF).
+This addon is a streamlined adaptation of the BlenderNerf addon created by Maxime Raafat. If you are looking for a much more customized and flexible version, we recommend using his [BlenderNerf addon](https://github.com/maximeraafat/BlenderNeRF).
 
 We also recommend watching his YouTube video about the BlenderNerf addon: [AI RENDERING from Blender to NeRF | BlenderNeRF Tutorial](https://www.youtube.com/watch?v=C8YuDoU11cg).
+
+| Blender Addon                         | Dataset                               |
+| ------------------------------------- | ------------------------------------- |
+| ![addon-ngp](./assets/addon-bngp.png) | ![dataset](./assets/dataset-imgs.jpg) |
+
+_Clock Synthetic dataset rendered with AWS Batch. 50 frames, CYCLES Engine, 10 samples per frame, 4k resolution._
 
 ## Motivation
 We created this addon to understand how the Instant-NGP and NeRF concepts work in general.
@@ -48,6 +53,11 @@ If you are interested in the AWS Batch implementation, you can check out [this](
 ## Concepts
 - **NeRF**: NeRF (Neural Radiance Fields) is a method for synthesizing new views of a scene from a set of input images.
 - **Instant-NGP**: Instant-NGP (Instant Neural Graphics Primitives) is an implementation of four neural graphics primitives, including Neural Radiance Fields (NeRF), Signed Distance Functions (SDFs), Neural Images, and Neural Volumes.
+
+## Authors
+
+- [jer-nc]()
+- [david-blg]()
 
 ## References
 1. BlenderNerf Repo - [BlenderNerf Github](https://github.com/maximeraafat/BlenderNeRF)
