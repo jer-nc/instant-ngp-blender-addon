@@ -50,10 +50,6 @@ If you are interested in the AWS Batch implementation, you can check out [this r
 - **Render Animation**: After updating the animation, use the "Render Animation" button to render frames and save camera data.
 - **Output**: Rendered frames and camera data are saved in the specified output folder with the chosen export name.
 
-## Concepts
-- **NeRF**: NeRF (Neural Radiance Fields) is a method for synthesizing new views of a scene from a set of input images.
-- **Instant-NGP**: Instant-NGP (Instant Neural Graphics Primitives) is an implementation of four neural graphics primitives, including Neural Radiance Fields (NeRF), Signed Distance Functions (SDFs), Neural Images, and Neural Volumes.
-
 ## Authors
 
 - [jer-nc](https://github.com/jer-nc)
